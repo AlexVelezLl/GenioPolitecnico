@@ -1,4 +1,6 @@
+#R Un gato
 #R un perro
+#P ¿Maulla?
 #R una oveja
 #R un elefante
 #P es un animal de granja?
