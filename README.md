@@ -17,7 +17,7 @@
 
 ![TheGame](./capturas//Captura1.png) 
 
-**Genio Politecnico** is a game based on Akinator, that aims guess the animal the player is thinking, using a desicion tree the player feeds while it is playing the game.
+**Genio Politecnico** is a game based on Akinator, that aims guess the animal the player is thinking, using a desicion tree that the player feeds while it is playing the game.
 
 ## The game 🎮
 
@@ -37,9 +37,9 @@ Or he missed and will feel so sad because the animal that he guessed is not the 
 ![TheGame](./capturas/Captura5.png)
 
 ## Behind the Scenes 🔥
-The game make use of a binary tree to model the game, where the nodes are the questions, and the answers indicate de direction to follow in the tree. The internal nodes model the questions, and the leafs model the answers.
+The game make use of a decision tree to model the game, where the nodes are the questions, and the answers indicate de direction to follow in the tree. The internal nodes model the questions, and the leafs model the answers.
 
-![binary-tree](./capturas/arbol.png)
+<div align='center'><img src="./capturas/arbol.png" alt="DecisionTree"/></div>
 
 The game starts at the root of the tree, and this descend through the tree while the player answers to the questions, when it gets to a leaf, the animal in that leaf is the animal wich **GenioPolitecnico** guessed. If the missed the answer, he will ask more information about the real animal the player was thinking, and the game will add it to the tree, the more you play, the more animals he will learn about, and most robust will be the tree.
 
