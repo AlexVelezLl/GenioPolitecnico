@@ -5,8 +5,6 @@
  */
 package TDA;
 
-import java.util.Comparator;
-
 public class Nodo<E> {
 
     private E Data;
@@ -14,9 +12,8 @@ public class Nodo<E> {
      * Retorna true si el nodo es tiene dos respuestas o dos preguntas
      */
     private boolean flag;
-    private Nodo<E> si; //Izquierdo Respuesta
-    private Nodo<E> no; //Derecho Pregunta
-    private Comparator<E> fn;
+    private Nodo<E> si; // Izquierdo Respuesta
+    private Nodo<E> no; // Derecho Pregunta
 
     public Nodo(E pregunta, Nodo<E> si, Nodo<E> no, boolean flag) {
         this.Data = pregunta;

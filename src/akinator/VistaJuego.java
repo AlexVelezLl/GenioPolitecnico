@@ -34,23 +34,23 @@ import javafx.util.Duration;
  */
 public class VistaJuego {
 
-    private Pane root;
+    private final Pane root;
     private StackPane stSi;
     private StackPane stNo;
-    private Font theFont = Font.font("Comic Sans MS", 36);
+    private final Font theFont = Font.font("Comic Sans MS", 36);
     private Pane paneRespt;
-    private ArbolDecision<String> tree; //Declarar el arbol de decision
+    private ArbolDecision<String> tree; // Declarar el arbol de decision
     private ImageView imgCartel;
 
-    public VistaJuego(Pane root) {
+    public VistaJuego(final Pane root) {
         this.root = root;
         createRoot();
     }
 
     private void createRoot() {
-        ImageView imgResp = new ImageView(new Image("/Resources/Options.png"));
+        final ImageView imgResp = new ImageView(new Image("/Resources/Options.png"));
         imgCartel = new ImageView(new Image("/Resources/CartelVacio.png"));
-        ImageView imgSelected = new ImageView(new Image("/Resources/Selected.png"));
+        final ImageView imgSelected = new ImageView(new Image("/Resources/Selected.png"));
 
         imgCartel.setTranslateX(490);
         imgCartel.setTranslateY(50);
@@ -59,12 +59,12 @@ public class VistaJuego {
         imgSelected.setTranslateX(1);
         imgSelected.setTranslateY(25);
         imgSelected.setOpacity(0);
-        VBox vbResp = new VBox();
+        final VBox vbResp = new VBox();
 
-        FadeTransition selectFadein = new FadeTransition(Duration.millis(200), imgSelected);
+        final FadeTransition selectFadein = new FadeTransition(Duration.millis(200), imgSelected);
         selectFadein.setToValue(1);
 
-        FadeTransition selectFadeout = new FadeTransition(Duration.millis(200), imgSelected);
+        final FadeTransition selectFadeout = new FadeTransition(Duration.millis(200), imgSelected);
         selectFadeout.setToValue(0);
 
         vbResp.setOnMouseEntered(e -> {
@@ -79,23 +79,23 @@ public class VistaJuego {
         stNo = new StackPane();
         stSi.setMinWidth(215);
         stSi.setMinHeight(60);
-        TranslateTransition transSi = new TranslateTransition(Duration.millis(200), imgSelected);
+        final TranslateTransition transSi = new TranslateTransition(Duration.millis(200), imgSelected);
         transSi.setToY(25);
         stSi.setOnMouseEntered(e -> transSi.play());
-        Label lblSi = new Label("Si");
+        final Label lblSi = new Label("Si");
         lblSi.setTextFill(Color.WHITE);
         lblSi.setFont(theFont);
         stSi.getChildren().add(lblSi);
 
         stNo.setMinWidth(215);
         stNo.setMinHeight(60);
-        TranslateTransition transNo = new TranslateTransition(Duration.millis(200), imgSelected);
+        final TranslateTransition transNo = new TranslateTransition(Duration.millis(200), imgSelected);
         transNo.setToY(85);
         transNo.play();
 
         stNo.setOnMouseEntered(e -> transNo.play());
 
-        Label lblNo = new Label("No");
+        final Label lblNo = new Label("No");
         lblNo.setTextFill(Color.WHITE);
         lblNo.setFont(theFont);
         stNo.getChildren().add(lblNo);
@@ -107,56 +107,54 @@ public class VistaJuego {
         paneRespt.setTranslateX(1400);
         paneRespt.setTranslateY(360);
 
-        TranslateTransition transPaneRespt = new TranslateTransition(Duration.millis(300), paneRespt);
+        final TranslateTransition transPaneRespt = new TranslateTransition(Duration.millis(300), paneRespt);
         transPaneRespt.setToX(700);
-        FadeTransition fadein = new FadeTransition(Duration.millis(400), imgCartel);
+        final FadeTransition fadein = new FadeTransition(Duration.millis(400), imgCartel);
         fadein.setToValue(1);
-        Timeline t = new Timeline();
+        final Timeline t = new Timeline();
         t.setCycleCount(1);
-        t.getKeyFrames().add(new KeyFrame(Duration.millis(400),
-                e -> {
-                    fadein.play();
-                    transPaneRespt.play();
-                }
-        ));
+        t.getKeyFrames().add(new KeyFrame(Duration.millis(400), e -> {
+            fadein.play();
+            transPaneRespt.play();
+        }));
         t.play();
         root.getChildren().addAll(imgCartel, paneRespt);
     }
 
     public void iniciarJuego() {
-        tree = ArbolDecision.cargarArbol(); //Metodo cargar arbol que lea el archivo de texto y devuelva el  arbol armado
+        tree = ArbolDecision.cargarArbol(); // Metodo cargar arbol que lea el archivo de texto y devuelva el arbol
+                                            // armado
         iniciarJuego(tree.getRoot());
     }
 
-    private void iniciarJuego(String pregunta) {
+    private void iniciarJuego(final String pregunta) {
         if (pregunta != null) {
-            String pregArreg = arreglarTexto(pregunta, 21);
-            Label lbl = new Label(pregArreg);
+            final String pregArreg = arreglarTexto(pregunta, 21);
+            final Label lbl = new Label(pregArreg);
             lbl.setTextFill(Color.WHITE);
             lbl.setFont(theFont);
             lbl.setTranslateX(600);
             lbl.setTranslateY(70);
             if (pregunta.equals(tree.getRoot())) {
                 lbl.setOpacity(0);
-                FadeTransition fadein = new FadeTransition(Duration.millis(400), lbl);
+                final FadeTransition fadein = new FadeTransition(Duration.millis(400), lbl);
                 fadein.setToValue(1);
-                Timeline t = new Timeline();
+                final Timeline t = new Timeline();
                 t.setCycleCount(1);
-                t.getKeyFrames().add(new KeyFrame(Duration.millis(400),
-                        e -> {
-                            fadein.play();
-                        }
-                ));
+                t.getKeyFrames().add(new KeyFrame(Duration.millis(400), e -> {
+                    fadein.play();
+                }));
                 t.play();
             }
 
             root.getChildren().add(lbl);
 
             stSi.setOnMouseClicked(e -> {
-                AudioClip sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Resources/Click.wav"));
+                final AudioClip sonido = java.applet.Applet
+                        .newAudioClip(getClass().getResource("/Resources/Click.wav"));
                 sonido.play();
                 root.getChildren().remove(root.getChildren().size() - 1);
-                String answer = tree.getAnswer(pregunta, true);
+                final String answer = tree.getAnswer(pregunta, true);
                 if (answer == null) {
                     terminarJuego(pregunta, true);
                 } else {
@@ -164,10 +162,11 @@ public class VistaJuego {
                 }
             });
             stNo.setOnMouseClicked(e -> {
-                AudioClip sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Resources/Click.wav"));
+                final AudioClip sonido = java.applet.Applet
+                        .newAudioClip(getClass().getResource("/Resources/Click.wav"));
                 sonido.play();
                 root.getChildren().remove(root.getChildren().size() - 1);
-                String answer = tree.getAnswer(pregunta, false);
+                final String answer = tree.getAnswer(pregunta, false);
                 if (answer == null) {
                     terminarJuego(pregunta, false);
                 } else {
@@ -177,57 +176,56 @@ public class VistaJuego {
         }
     }
 
-    private void terminarJuego(String pregunta, boolean acerto) {
-        TranslateTransition transResp = new TranslateTransition(Duration.millis(300), paneRespt);
+    private void terminarJuego(final String pregunta, final boolean acerto) {
+        final TranslateTransition transResp = new TranslateTransition(Duration.millis(300), paneRespt);
         transResp.setToX(1400);
         transResp.play();
 
-        Pane pContinuar = new Pane();
+        final Pane pContinuar = new Pane();
         pContinuar.getChildren().add(new ImageView(new Image("/Resources/Continuar.png")));
         pContinuar.setTranslateX(1400);
         pContinuar.setTranslateY(400);
         pContinuar.setOnMouseEntered(e3 -> root.getScene().setCursor(Cursor.HAND));
         pContinuar.setOnMouseExited(e3 -> root.getScene().setCursor(Cursor.DEFAULT));
-        TranslateTransition transConti = new TranslateTransition(Duration.millis(500), pContinuar);
+        final TranslateTransition transConti = new TranslateTransition(Duration.millis(500), pContinuar);
         transConti.setToX(790);
         root.getChildren().add(pContinuar);
         if (acerto) {
-            ImageView imaTortGan = new ImageView(new Image("/Resources/TortugaGanadora.png"));
+            final ImageView imaTortGan = new ImageView(new Image("/Resources/TortugaGanadora.png"));
             imaTortGan.setTranslateX(165);
             imaTortGan.setTranslateY(67);
             imaTortGan.setOpacity(0);
 
-            Label lbl = new Label("     ¡Gane! Eso fue\n    realmente facil.");
+            final Label lbl = new Label("     ¡Gane! Eso fue\n    realmente facil.");
             lbl.setTextFill(Color.WHITE);
             lbl.setFont(theFont);
             lbl.setTranslateX(600);
             lbl.setTranslateY(80);
 
-            FadeTransition fdTort = new FadeTransition(Duration.millis(300), root.getChildren().get(1));
+            final FadeTransition fdTort = new FadeTransition(Duration.millis(300), root.getChildren().get(1));
             fdTort.setToValue(0);
-            FadeTransition fdTortGan = new FadeTransition(Duration.millis(300), imaTortGan);
+            final FadeTransition fdTortGan = new FadeTransition(Duration.millis(300), imaTortGan);
             fdTortGan.setToValue(1);
-            Group gp = new Group(imaTortGan);
+            final Group gp = new Group(imaTortGan);
             gp.getChildren().addAll(imgCartel, lbl);
             fdTortGan.setOnFinished(e -> {
-                TranslateTransition transGp = new TranslateTransition(Duration.millis(600), gp);
+                final TranslateTransition transGp = new TranslateTransition(Duration.millis(600), gp);
                 transGp.setToX(175);
                 transGp.play();
                 transGp.setOnFinished(e2 -> {
-                    RotateTransition rtTort = new RotateTransition(Duration.millis(150), imaTortGan);
+                    final RotateTransition rtTort = new RotateTransition(Duration.millis(150), imaTortGan);
                     rtTort.setCycleCount(4);
                     rtTort.setByAngle(-10);
                     rtTort.setAutoReverse(true);
 
-                    Timeline t = new Timeline();
-                    t.getKeyFrames().add(new KeyFrame(Duration.millis(1000),
-                            e3 -> rtTort.play()
-                    ));
+                    final Timeline t = new Timeline();
+                    t.getKeyFrames().add(new KeyFrame(Duration.millis(1000), e3 -> rtTort.play()));
 
                     t.setCycleCount(-1);
                     t.play();
                     pContinuar.setOnMouseClicked(e3 -> {
-                        AudioClip sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Resources/Click.wav"));
+                        final AudioClip sonido = java.applet.Applet
+                                .newAudioClip(getClass().getResource("/Resources/Click.wav"));
                         sonido.play();
                         finalizarJuego(imgCartel, pContinuar, imaTortGan, lbl, true);
                     });
@@ -240,35 +238,33 @@ public class VistaJuego {
             fdTort.play();
             fdTortGan.play();
         } else {
-            Label lbl = new Label("    ¡Vaya! Me lo has\n     puesto dificil.");
+            final Label lbl = new Label("    ¡Vaya! Me lo has\n     puesto dificil.");
             lbl.setTextFill(Color.WHITE);
             lbl.setFont(theFont);
             lbl.setTranslateX(600);
             lbl.setTranslateY(80);
 
-            VBox preguntas = new VBox();
+            final VBox preguntas = new VBox();
             preguntas.setTranslateX(600);
             preguntas.setTranslateY(250);
             preguntas.setSpacing(20);
-            Label pregAnim = new Label("¿En que animal estabas pensando?");
+            final Label pregAnim = new Label("¿En que animal estabas pensando?");
             pregAnim.setFont(theFont);
             pregAnim.setTextFill(Color.WHITE);
-            StackPane stPreg = new StackPane(pregAnim);
+            final StackPane stPreg = new StackPane(pregAnim);
 
-            stPreg.setStyle("-fx-background-color: #d58029;"
-                    + "-fx-padding: 10px;"
-                    + "-fx-background-radius: 10;");
-            TextField txtFdAnim = new TextField();
-            Font pregFont = Font.font("Comic Sans MZ", 30);
+            stPreg.setStyle("-fx-background-color: #d58029;" + "-fx-padding: 10px;" + "-fx-background-radius: 10;");
+            final TextField txtFdAnim = new TextField();
+            final Font pregFont = Font.font("Comic Sans MZ", 30);
             txtFdAnim.setFont(pregFont);
             txtFdAnim.setStyle("-fx-background-radius: 10;");
-            HBox hbEnv = new HBox();
+            final HBox hbEnv = new HBox();
             hbEnv.setSpacing(10);
 
-            HBox hbEnv2 = new HBox();
-            StackPane stPreg2 = new StackPane();
-            String newAnimal = "";
-            Pane paneEnv = new Pane(new ImageView(new Image("Resources/Next.png")));
+            final HBox hbEnv2 = new HBox();
+            final StackPane stPreg2 = new StackPane();
+            final String newAnimal = "";
+            final Pane paneEnv = new Pane(new ImageView(new Image("Resources/Next.png")));
             paneEnv.setTranslateY(5);
             paneEnv.setOnMouseEntered(e -> root.getScene().setCursor(Cursor.HAND));
             paneEnv.setOnMouseExited(e -> root.getScene().setCursor(Cursor.DEFAULT));
@@ -276,43 +272,46 @@ public class VistaJuego {
 
             hbEnv.getChildren().addAll(txtFdAnim, paneEnv);
 
-            TextField txtFd2 = new TextField();
+            final TextField txtFd2 = new TextField();
             txtFd2.setFont(pregFont);
             txtFd2.setStyle("-fx-background-radius: 10;");
-            StackPane stPreg3 = new StackPane();
-            Pane paneEnv2 = new Pane(new ImageView(new Image("Resources/Next.png")));
+            final StackPane stPreg3 = new StackPane();
+            final Pane paneEnv2 = new Pane(new ImageView(new Image("Resources/Next.png")));
             paneEnv2.setTranslateY(5);
             paneEnv2.setOnMouseEntered(e -> root.getScene().setCursor(Cursor.HAND));
             paneEnv2.setOnMouseExited(e -> root.getScene().setCursor(Cursor.DEFAULT));
             paneEnv2.setOnMouseClicked(e -> {
                 if (!txtFd2.getText().equals("")) {
-                    //Implementar guardar en el arbol aqui
-                    AudioClip sonido2 = java.applet.Applet.newAudioClip(getClass().getResource("/Resources/Click.wav"));
+                    // Implementar guardar en el arbol aqui
+                    final AudioClip sonido2 = java.applet.Applet
+                            .newAudioClip(getClass().getResource("/Resources/Click.wav"));
                     sonido2.play();
-                    String preg2 = "Para " + txtFdAnim.getText() + ", la respuesta a "
-                            + "la pregunta " + txtFd2.getText() + ", es:";
+                    String preg2 = "Para " + txtFdAnim.getText() + ", la respuesta a " + "la pregunta "
+                            + txtFd2.getText() + ", es:";
 
                     preg2 = arreglarTexto(preg2, 35);
-                    Label lblPreg2 = new Label(preg2);
+                    final Label lblPreg2 = new Label(preg2);
                     lblPreg2.setFont(pregFont);
                     lblPreg2.setTextFill(Color.WHITE);
                     stPreg3.getChildren().add(lblPreg2);
-                    stPreg3.setStyle("-fx-background-color: #d58029;"
-                            + "-fx-padding: 10px;"
-                            + "-fx-background-radius: 10;");
+                    stPreg3.setStyle(
+                            "-fx-background-color: #d58029;" + "-fx-padding: 10px;" + "-fx-background-radius: 10;");
 
-                    TranslateTransition transPreg = new TranslateTransition(Duration.millis(300), preguntas);
-                    transPreg.setToY(preguntas.getTranslateY() - ((StackPane) preguntas.getChildren().get(2)).getHeight()
-                            - ((HBox) preguntas.getChildren().get(3)).getHeight() - 2 * preguntas.getSpacing());
-                    FadeTransition fadePreg3 = new FadeTransition(Duration.millis(300), preguntas.getChildren().get(2));
-                    FadeTransition fadePreg4 = new FadeTransition(Duration.millis(300), preguntas.getChildren().get(3));
+                    final TranslateTransition transPreg = new TranslateTransition(Duration.millis(300), preguntas);
+                    transPreg
+                            .setToY(preguntas.getTranslateY() - ((StackPane) preguntas.getChildren().get(2)).getHeight()
+                                    - ((HBox) preguntas.getChildren().get(3)).getHeight() - 2 * preguntas.getSpacing());
+                    final FadeTransition fadePreg3 = new FadeTransition(Duration.millis(300),
+                            preguntas.getChildren().get(2));
+                    final FadeTransition fadePreg4 = new FadeTransition(Duration.millis(300),
+                            preguntas.getChildren().get(3));
                     fadePreg3.setToValue(0);
                     fadePreg4.setToValue(0);
                     fadePreg3.play();
                     fadePreg4.play();
                     transPreg.play();
                     fadePreg3.setOnFinished(e2 -> {
-                        Label lblFinal = new Label("Muchas Gracias! He \naprendido algo nuevo.");
+                        final Label lblFinal = new Label("Muchas Gracias! He \naprendido algo nuevo.");
                         lblFinal.setFont(theFont);
                         lblFinal.setTextFill(Color.WHITE);
                         lblFinal.setTranslateX(600);
@@ -320,15 +319,17 @@ public class VistaJuego {
                         lblFinal.setOpacity(0);
                         root.getChildren().add(lblFinal);
                         pContinuar.setOnMouseClicked(e3 -> {
-                            AudioClip sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Resources/Click.wav"));
+                            final AudioClip sonido = java.applet.Applet
+                                    .newAudioClip(getClass().getResource("/Resources/Click.wav"));
                             sonido.play();
                             finalizarJuego(imgCartel, pContinuar, null, lblFinal, false);
                         });
-                        FadeTransition fdLblFinal = new FadeTransition(Duration.millis(300), lblFinal);
+                        final FadeTransition fdLblFinal = new FadeTransition(Duration.millis(300), lblFinal);
                         fdLblFinal.setToValue(1);
-                        TranslateTransition transPreg3 = new TranslateTransition(Duration.millis(200), stPreg3);
+                        final TranslateTransition transPreg3 = new TranslateTransition(Duration.millis(200), stPreg3);
                         transPreg3.setToX(1400);
-                        TranslateTransition transCartel = new TranslateTransition(Duration.millis(300), paneRespt);
+                        final TranslateTransition transCartel = new TranslateTransition(Duration.millis(300),
+                                paneRespt);
                         transCartel.setToX(1400);
 
                         stSi.setOnMouseClicked(e3 -> {
@@ -336,7 +337,8 @@ public class VistaJuego {
                             tree.add(txtFdAnim.getText(), txtFd2.getText(), true);
                             tree.add(pregunta, txtFd2.getText(), false);
 
-                            AudioClip sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Resources/Click.wav"));
+                            final AudioClip sonido = java.applet.Applet
+                                    .newAudioClip(getClass().getResource("/Resources/Click.wav"));
                             sonido.play();
                             lbl.setOpacity(0);
                             transPreg3.play();
@@ -350,7 +352,8 @@ public class VistaJuego {
                             tree.add(txtFdAnim.getText(), txtFd2.getText(), false);
                             tree.add(pregunta, txtFd2.getText(), true);
 
-                            AudioClip sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Resources/Click.wav"));
+                            final AudioClip sonido = java.applet.Applet
+                                    .newAudioClip(getClass().getResource("/Resources/Click.wav"));
                             sonido.play();
                             transPreg3.play();
                             lbl.setOpacity(0);
@@ -358,7 +361,8 @@ public class VistaJuego {
                             transCartel.play();
                             transConti.play();
                         });
-                        TranslateTransition transCartResp = new TranslateTransition(Duration.millis(300), paneRespt);
+                        final TranslateTransition transCartResp = new TranslateTransition(Duration.millis(300),
+                                paneRespt);
                         transCartResp.setToX(700);
                         transCartResp.setToY(paneRespt.getTranslateY() + 50);
                         transCartResp.play();
@@ -376,17 +380,18 @@ public class VistaJuego {
         }
     }
 
-    private void finalizarJuego(ImageView cartel, Pane continuar, ImageView tort, Label letras, boolean gano) {
+    private void finalizarJuego(final ImageView cartel, final Pane continuar, final ImageView tort, final Label letras,
+            final boolean gano) {
         tree.guardarArbol();
-        TranslateTransition transCartel = new TranslateTransition(Duration.millis(300), cartel);
-        TranslateTransition transLetras = new TranslateTransition(Duration.millis(300), letras);
-        TranslateTransition transContinuar = new TranslateTransition(Duration.millis(300), continuar);
+        final TranslateTransition transCartel = new TranslateTransition(Duration.millis(300), cartel);
+        final TranslateTransition transLetras = new TranslateTransition(Duration.millis(300), letras);
+        final TranslateTransition transContinuar = new TranslateTransition(Duration.millis(300), continuar);
         if (gano) {
-            TranslateTransition transtort = new TranslateTransition(Duration.millis(300), tort);
+            final TranslateTransition transtort = new TranslateTransition(Duration.millis(300), tort);
             transtort.setToX(-600);
             transtort.play();
         } else {
-            FadeTransition fadeTort = new FadeTransition(Duration.millis(300), root.getChildren().get(1));
+            final FadeTransition fadeTort = new FadeTransition(Duration.millis(300), root.getChildren().get(1));
             fadeTort.setToValue(0);
             fadeTort.play();
         }
@@ -400,18 +405,18 @@ public class VistaJuego {
         transContinuar.play();
         transContinuar.setOnFinished(e -> {
             VistaIndex.getTimeline().play();
-            Timeline t = new Timeline();
+            final Timeline t = new Timeline();
             t.getKeyFrames().add(new KeyFrame(Duration.millis(1080), e1 -> root.getChildren().get(1).setOpacity(1)));
             t.play();
         });
 
     }
 
-    public static String arreglarTexto(String texto, int caract) {
-        String[] txtSplit = texto.split(" ");
+    public static String arreglarTexto(final String texto, final int caract) {
+        final String[] txtSplit = texto.split(" ");
         String txt = "";
         int acum = 0;
-        for (String s : txtSplit) {
+        for (final String s : txtSplit) {
             if (acum + 1 + s.length() < caract) {
                 acum += s.length() + 1;
                 txt = txt + " " + s;
@@ -443,16 +448,17 @@ public class VistaJuego {
     }
 }
 
-class Handle implements EventHandler {
+class Handle implements EventHandler<Event> {
 
-    private TextField txtFd;
+    private final TextField txtFd;
     private String stringAsig;
-    private Pane pane;
-    private StackPane pane2;
-    private HBox hb;
-    private String preg;
+    private final Pane pane;
+    private final StackPane pane2;
+    private final HBox hb;
+    private final String preg;
 
-    public Handle(TextField txtFd, String stringAsig, Pane pane, StackPane pane2, String preg, HBox hb) {
+    public Handle(final TextField txtFd, final String stringAsig, final Pane pane, final StackPane pane2,
+            final String preg, final HBox hb) {
         this.txtFd = txtFd;
         this.pane = pane;
         this.pane2 = pane2;
@@ -461,32 +467,32 @@ class Handle implements EventHandler {
     }
 
     @Override
-    public void handle(Event event) {
+    public void handle(final Event event) {
         if (!txtFd.getText().equals("")) {
-            AudioClip sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Resources/Click.wav"));
+            final AudioClip sonido = java.applet.Applet.newAudioClip(getClass().getResource("/Resources/Click.wav"));
             sonido.play();
             stringAsig = txtFd.getText();
             txtFd.setDisable(true);
             pane.setDisable(true);
-            String pregunta = "Escribe una pregunta que me permita diferenciar entre " + preg + " y " + stringAsig + ": ";
+            final String pregunta = "Escribe una pregunta que me permita diferenciar entre " + preg + " y " + stringAsig
+                    + ": ";
             String preguntaArreg = VistaJuego.arreglarTexto(pregunta, 35);
             preguntaArreg = preguntaArreg.substring(1, preguntaArreg.length() - 2);
-            Label lbl = new Label(preguntaArreg);
-            Font fuente = Font.font("Comic Sans MZ", 30);
+            final Label lbl = new Label(preguntaArreg);
+            final Font fuente = Font.font("Comic Sans MZ", 30);
             lbl.setFont(fuente);
             lbl.setTextFill(Color.WHITE);
             pane2.getChildren().add(lbl);
-            pane2.setStyle("-fx-background-color: #d58029;"
-                    + "-fx-background-radius: 10;");
-            VBox vb = (VBox) pane2.getParent();
-            TranslateTransition transVb = new TranslateTransition(Duration.millis(400), vb);
+            pane2.setStyle("-fx-background-color: #d58029;" + "-fx-background-radius: 10;");
+            final VBox vb = (VBox) pane2.getParent();
+            final TranslateTransition transVb = new TranslateTransition(Duration.millis(400), vb);
             transVb.setToY(vb.getTranslateY() - ((StackPane) vb.getChildren().get(0)).getHeight()
                     - ((HBox) vb.getChildren().get(1)).getHeight() - 2 * vb.getSpacing());
-            FadeTransition fdVb = new FadeTransition(Duration.millis(300), vb.getChildren().get(0));
+            final FadeTransition fdVb = new FadeTransition(Duration.millis(300), vb.getChildren().get(0));
             fdVb.setToValue(0);
-            FadeTransition fdVb2 = new FadeTransition(Duration.millis(300), vb.getChildren().get(1));
+            final FadeTransition fdVb2 = new FadeTransition(Duration.millis(300), vb.getChildren().get(1));
             fdVb2.setToValue(0);
-            FadeTransition fdVb3 = new FadeTransition(Duration.millis(300), hb);
+            final FadeTransition fdVb3 = new FadeTransition(Duration.millis(300), hb);
             fdVb3.setToValue(1);
 
             fdVb.play();

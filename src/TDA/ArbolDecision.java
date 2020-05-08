@@ -10,7 +10,6 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.Stack;
 
 public class ArbolDecision<E> implements Comparator<E> {
@@ -33,7 +32,7 @@ public class ArbolDecision<E> implements Comparator<E> {
         if (n == null) {
             return 0;
         }
-        return 1 + Math.max(alturaArbol(n.getSi()), alturaArbol(n.getNo())); //getSi Izq
+        return 1 + Math.max(alturaArbol(n.getSi()), alturaArbol(n.getNo())); // getSi Izq
     }
 
     public E getRoot() {
@@ -66,7 +65,7 @@ public class ArbolDecision<E> implements Comparator<E> {
 
     public static ArbolDecision<String> cargarArbol() {
         ArbolDecision<String> tree = new ArbolDecision<>();
-        Stack<Nodo<String>> pila = new Stack();
+        Stack<Nodo<String>> pila = new Stack<>();
         Nodo<String> nodo = null;
         try (BufferedReader bf = new BufferedReader(new FileReader("src/Resources/datos-1.txt"))) {
             String line;
@@ -108,7 +107,7 @@ public class ArbolDecision<E> implements Comparator<E> {
         }
         return "";
     }
-    ////////////---------------Insertar en el arbol------------------///////////
+    //////////// ---------------Insertar en el arbol------------------///////////
 
     public boolean add(E child, E parent, boolean afirmative) {
         Nodo<E> nch = new Nodo<>(child);
@@ -217,8 +216,8 @@ public class ArbolDecision<E> implements Comparator<E> {
     }
 
     /**
-     * Función auxiliar de "add" Busca si el elemento "data" ya se encuentra en
-     * el árbol
+     * Función auxiliar de "add" Busca si el elemento "data" ya se encuentra en el
+     * árbol
      *
      * @param data
      * @return Nodo
@@ -254,24 +253,7 @@ public class ArbolDecision<E> implements Comparator<E> {
         }
     }
 
-    /**
-     * Ingresa los datos de un àrbol completo
-     *
-     * @param Data
-     */
-    public void insertarArbol(LinkedList<String> Data) {
-
-        for (String Nodo : Data) {
-
-            if (Nodo.substring(0, 2).equals("#P")) {
-                addPregunta((E) Nodo, root);
-            } else {
-                addRespuesta((E) Nodo, root);
-            }
-        }
-    }
-
-    //enOrden-------
+    // enOrden-------
     public void enOrden() {
         enOrden(this.root);
         System.out.println();

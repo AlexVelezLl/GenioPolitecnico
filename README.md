@@ -37,7 +37,7 @@ Or he missed and will feel so sad because the animal that he guessed is not the 
 ![TheGame](./capturas/Captura5.png)
 
 ## Behind the Scenes 🔥
-The game make use of a decision tree to model the game, where the nodes are the questions, and the answers indicate de direction to follow in the tree. The internal nodes model the questions, and the leafs model the answers.
+The game make use of a decision tree to model the game, where the nodes are the questions, and the answers indicate de direction to follow in the tree. The internal nodes model the questions, and the leafs model the animals.
 
 <div align='center'><img src="./capturas/arbol.png" alt="DecisionTree"/></div>
 
